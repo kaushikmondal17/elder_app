@@ -1,0 +1,9 @@
+
+{
+  "name": "Elder Pharma Sales Connect",
+  "description": "A comprehensive mobile field sales management system for Elder Pharma, featuring GPS-verified attendance, sales tracking, and real-time manager oversight.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
