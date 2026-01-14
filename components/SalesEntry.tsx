@@ -49,7 +49,7 @@ const SalesEntry: React.FC<SalesEntryProps> = ({ user, onAdd, history }) => {
       setTimeout(() => setSuccess(false), 3000);
       setShopName('');
       setQuantity(1);
-      setBillPreview(null);
+      // setBillPreview(null);
     });
   };
 
@@ -211,7 +211,7 @@ const SalesEntry: React.FC<SalesEntryProps> = ({ user, onAdd, history }) => {
               <button
                 type="button"
                 onClick={sendToProcess}
-                className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase text-xs tracking-widest"
+                className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase text-xs tracking-widest "
               >
                 Send to Process
               </button>

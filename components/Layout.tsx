@@ -17,7 +17,7 @@ const Layout: React.FC<LayoutProps> = ({ children, user, currentView, setView, o
 
   const triggerSOS = () => {
     navigator.geolocation.getCurrentPosition((pos) => {
-      alert(`🚨 EMERGENCY SOS TRIGGERED!\nLocation: ${pos.coords.latitude}, ${pos.coords.longitude}\nElder Pharma HQ has been notified with your live coordinates.`);
+      alert(`🚨 EMERGENCY SOS TRIGGERED!\nLocation: ${pos.coords.latitude}, ${pos.coords.longitude}\nElder Laboratories HQ has been notified with your live coordinates.`);
     });
   };
 
@@ -43,7 +43,7 @@ const Layout: React.FC<LayoutProps> = ({ children, user, currentView, setView, o
             <Menu className="w-6 h-6" />
           </button>
           <div>
-            <h2 className="text-lg font-bold text-blue-700 leading-tight">Elder Pharma</h2>
+            <h2 className="text-lg font-bold text-blue-700 leading-tight">Elder Laboratories</h2>
             <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Connect v2.0</p>
           </div>
         </div>
