@@ -35,7 +35,7 @@ const About: React.FC = () => {
         </section>
 
         <div className="grid grid-cols-2 gap-4">
-          <a href="#" className="flex items-center space-x-3 p-4 bg-white border border-slate-100 rounded-2xl shadow-sm">
+          <a href="https://www.alventapharma.com/" className="flex items-center space-x-3 p-4 bg-white border border-slate-100 rounded-2xl shadow-sm">
              <Globe className="w-5 h-5 text-slate-400" />
              <span className="text-xs font-bold text-slate-700">Official Website</span>
           </a>

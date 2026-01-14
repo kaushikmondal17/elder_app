@@ -15,6 +15,14 @@ const SalesEntry: React.FC<SalesEntryProps> = ({ user, onAdd, history }) => {
   const [selectedMed, setSelectedMed] = useState(MOCK_MEDICINES[0]);
   const [quantity, setQuantity] = useState(1);
   const [success, setSuccess] = useState(false);
+  const [billItems, setBillItems] = useState<Array<{
+    id: string;
+    medicineName: string;
+    quantity: number;
+    price: number;
+    value: number;
+    profit: number;
+  }>>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -41,6 +49,55 @@ const SalesEntry: React.FC<SalesEntryProps> = ({ user, onAdd, history }) => {
       setTimeout(() => setSuccess(false), 3000);
       setShopName('');
       setQuantity(1);
+      setBillPreview(null);
+    });
+  };
+
+  const addToBill = () => {
+    if (!shopName) return;
+    const value = selectedMed.price * quantity;
+    const profit = value * selectedMed.profitMargin;
+    const item = {
+      id: Math.random().toString(36).substr(2, 9),
+      medicineName: selectedMed.name,
+      quantity,
+      price: selectedMed.price,
+      value,
+      profit,
+    };
+    setBillItems((s) => [...s, item]);
+    setQuantity(1);
+  };
+
+  const removeBillItem = (id: string) => {
+    setBillItems((s) => s.filter(i => i.id !== id));
+  };
+
+  const sendToProcess = () => {
+    if (!shopName || billItems.length === 0) return;
+
+    navigator.geolocation.getCurrentPosition((pos) => {
+      const ts = new Date().toISOString();
+      billItems.forEach(item => {
+        onAdd({
+          id: Math.random().toString(36).substr(2, 9),
+          salesmanId: user.id,
+          salesmanName: user.name,
+          shopName,
+          medicineName: item.medicineName,
+          quantity: item.quantity,
+          value: item.value,
+          profit: item.profit,
+          timestamp: ts,
+          location: { lat: pos.coords.latitude, lng: pos.coords.longitude }
+        });
+      });
+
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 3000);
+      setShopName('');
+      setQuantity(1);
+      setBillItems([]);
     });
   };
 
@@ -105,6 +162,14 @@ const SalesEntry: React.FC<SalesEntryProps> = ({ user, onAdd, history }) => {
         </div>
 
         <button 
+          type="button"
+          onClick={addToBill}
+          className="w-full mb-3 py-4 bg-emerald-600 text-white rounded-[1.25rem] font-black uppercase text-xs tracking-widest shadow-md flex items-center justify-center space-x-2"
+        >
+          <span>Add To Bill</span>
+        </button>
+
+        <button 
           type="submit"
           className="w-full py-5 bg-blue-600 text-white rounded-[1.5rem] font-black uppercase text-xs tracking-widest shadow-xl shadow-blue-100 flex items-center justify-center space-x-2"
         >
@@ -114,6 +179,46 @@ const SalesEntry: React.FC<SalesEntryProps> = ({ user, onAdd, history }) => {
 
         {success && <p className="text-center text-green-600 font-black text-xs animate-bounce">ENTRY RECORDED</p>}
       </form>
+
+      <div className="mt-6">
+        <h4 className="font-bold text-slate-800">Bill Preview</h4>
+        {billItems.length === 0 ? (
+          <p className="text-slate-400 text-xs italic">No items in bill. Add products to build a bill.</p>
+        ) : (
+          <div className="mt-3 p-4 bg-white border border-slate-100 rounded-[1.5rem] space-y-4">
+            {billItems.map(item => (
+              <div key={item.id} className="flex items-center justify-between">
+                <div>
+                  <p className="font-bold text-slate-800">{item.medicineName} x {item.quantity}</p>
+                  <p className="text-[10px] text-slate-400">Rate ₹{item.price}</p>
+                </div>
+                <div className="text-right">
+                  <p className="font-black text-blue-600">₹{item.value}</p>
+                  <button onClick={() => removeBillItem(item.id)} className="text-xs text-red-500 font-bold mt-1">Remove</button>
+                </div>
+              </div>
+            ))}
+
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+              <div className="font-bold">Total</div>
+              <div className="text-right">
+                <div className="font-black text-blue-600">₹{billItems.reduce((s, i) => s + i.value, 0)}</div>
+                <div className="text-[10px] text-slate-400">Profit ₹{billItems.reduce((s, i) => s + i.profit, 0).toFixed(2)}</div>
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="button"
+                onClick={sendToProcess}
+                className="w-full py-4 bg-indigo-600 text-white rounded-2xl font-black uppercase text-xs tracking-widest"
+              >
+                Send to Process
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
 
       <div className="space-y-4">
         <h4 className="font-bold text-slate-800">Your Activity Today</h4>
