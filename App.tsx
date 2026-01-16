@@ -19,6 +19,26 @@ const DEFAULT_STAFF: User[] = [
   { id: 'S102', employeeId: 'ELD-SLS-102', name: 'Amit Singh', role: UserRole.SALESMAN, department: 'Pharma Sales', points: 980, phone: '9822110033', salary: 32000, pf: 1600, joiningDate: '2023-01-10', bloodGroup: 'A+', email: 'amit.s@elderpharma.com', assignedTasks: [] }
 ];
 
+const DUMMY_ATTENDANCE: AttendanceRecord[] = [
+  { id: 'ATT-001', userId: 'S101', userName: 'Rajesh Kumar', type: 'IN', timestamp: '2026-01-16T08:45:00', photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rajesh', location: { lat: 28.6139, lng: 77.2090 }, place: 'Office', isValid: true },
+  { id: 'ATT-002', userId: 'S101', userName: 'Rajesh Kumar', type: 'OUT', timestamp: '2026-01-15T18:30:00', photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rajesh', location: { lat: 28.6250, lng: 77.2200 }, place: 'Field', isValid: true },
+  { id: 'ATT-003', userId: 'S101', userName: 'Rajesh Kumar', type: 'IN', timestamp: '2026-01-15T09:15:00', photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rajesh', location: { lat: 28.6139, lng: 77.2090 }, place: 'Office', isValid: true },
+  { id: 'ATT-004', userId: 'S101', userName: 'Rajesh Kumar', type: 'OUT', timestamp: '2026-01-14T17:45:00', photo: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Rajesh', location: { lat: 28.6180, lng: 77.2150 }, place: 'Field', isValid: true }
+];
+
+const DUMMY_SALES: SalesRecord[] = [
+  { id: 'SALE-001', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'Apollo Pharmacy', shopAddress: 'New Delhi, India', shopMobile: '9999888877', medicineName: 'Paracetamol 500mg', quantity: 50, value: 2500, profit: 500, timestamp: '2026-01-16T10:30:00', deliveryDate: '2026-01-18', location: { lat: 28.6139, lng: 77.2090 } },
+  { id: 'SALE-002', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'Life Care Pharmacy', shopAddress: 'Delhi, India', shopMobile: '9888777666', medicineName: 'Amoxicillin 250mg', quantity: 30, value: 1800, profit: 360, timestamp: '2026-01-16T14:15:00', deliveryDate: '2026-01-19', location: { lat: 28.6250, lng: 77.2200 } },
+  { id: 'SALE-003', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'Medplus Pharmacy', shopAddress: 'Gurgaon, India', shopMobile: '9777666555', medicineName: 'Aspirin 75mg', quantity: 100, value: 3500, profit: 700, timestamp: '2026-01-15T11:45:00', deliveryDate: '2026-01-17', location: { lat: 28.6180, lng: 77.2150 } },
+  { id: 'SALE-004', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'Wellness Pharmacy', shopAddress: 'Noida, India', shopMobile: '9666555444', medicineName: 'Vitamin C 1000mg', quantity: 75, value: 2250, profit: 450, timestamp: '2026-01-15T15:20:00', deliveryDate: '2026-01-18', location: { lat: 28.5921, lng: 77.2196 } },
+  { id: 'SALE-005', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'Raj Medical Store', shopAddress: 'Faridabad, India', shopMobile: '9555444333', medicineName: 'Ibuprofen 400mg', quantity: 60, value: 2100, profit: 420, timestamp: '2026-01-16T09:00:00', deliveryDate: '2026-01-18', location: { lat: 28.4089, lng: 77.3178 } },
+  { id: 'SALE-006', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'HealthPlus Chemist', shopAddress: 'Greater Noida, India', shopMobile: '9444333222', medicineName: 'Metformin 500mg', quantity: 40, value: 2200, profit: 440, timestamp: '2026-01-16T11:30:00', deliveryDate: '2026-01-19', location: { lat: 28.4744, lng: 77.5610 } },
+  { id: 'SALE-007', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'Care Pharmacy Center', shopAddress: 'Indirapuram, India', shopMobile: '9333222111', medicineName: 'Atorvastatin 10mg', quantity: 25, value: 2800, profit: 560, timestamp: '2026-01-16T13:45:00', deliveryDate: '2026-01-20', location: { lat: 28.6129, lng: 77.3859 } },
+  { id: 'SALE-008', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'City Health Pharmacy', shopAddress: 'Vaishali, India', shopMobile: '9222111000', medicineName: 'Lisinopril 5mg', quantity: 35, value: 2450, profit: 490, timestamp: '2026-01-15T10:20:00', deliveryDate: '2026-01-17', location: { lat: 28.6314, lng: 77.3869 } },
+  { id: 'SALE-009', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'Prime Medical Pharmacy', shopAddress: 'Sector 62, Noida', shopMobile: '9111000999', medicineName: 'Omeprazole 20mg', quantity: 45, value: 2350, profit: 470, timestamp: '2026-01-15T14:00:00', deliveryDate: '2026-01-17', location: { lat: 28.5746, lng: 77.3639 } },
+  { id: 'SALE-010', salesmanId: 'S101', salesmanName: 'Rajesh Kumar', shopName: 'SafePlus Pharmacy', shopAddress: 'Janakpuri, Delhi', shopMobile: '8999888777', medicineName: 'Cetirizine 10mg', quantity: 80, value: 1950, profit: 390, timestamp: '2026-01-14T09:30:00', deliveryDate: '2026-01-16', location: { lat: 28.5244, lng: 77.0855 } }
+];
+
 const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [view, setView] = useState<AppView>('dashboard');
@@ -30,9 +50,11 @@ const App: React.FC = () => {
   useEffect(() => {
     const savedSales = localStorage.getItem('elder_sales');
     if (savedSales) setSalesData(JSON.parse(savedSales));
+    else setSalesData(DUMMY_SALES);
     
     const savedAttendance = localStorage.getItem('elder_attendance');
     if (savedAttendance) setAttendanceLogs(JSON.parse(savedAttendance));
+    else setAttendanceLogs(DUMMY_ATTENDANCE);
 
     const savedLeaves = localStorage.getItem('elder_leaves');
     if (savedLeaves) setLeaves(JSON.parse(savedLeaves));
