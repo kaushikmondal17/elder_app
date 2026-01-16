@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { AttendanceRecord, SalesRecord } from '../types';
-import { Clock, ShoppingBag, MapPin, CheckCircle2, XCircle } from 'lucide-react';
+import { Clock, ShoppingBag, MapPin, CheckCircle2, XCircle, Phone, MapPin as LocationIcon, Calendar, X } from 'lucide-react';
 
 interface HistoryViewProps {
   logs: AttendanceRecord[];
@@ -10,11 +10,11 @@ interface HistoryViewProps {
 
 const HistoryView: React.FC<HistoryViewProps> = ({ logs, sales }) => {
   const [activeHistory, setActiveHistory] = useState<'attendance' | 'sales'>('attendance');
+  const [selectedSale, setSelectedSale] = useState<SalesRecord | null>(null);
 
   return (
     <div className="p-6 space-y-6">
       <h2 className="text-2xl font-bold text-slate-800">Field Activity logs</h2>
-
       <div className="flex bg-slate-100 rounded-2xl p-1">
         <button 
           onClick={() => setActiveHistory('attendance')}
@@ -66,7 +66,11 @@ const HistoryView: React.FC<HistoryViewProps> = ({ logs, sales }) => {
             <p className="text-center text-slate-400 text-sm py-10">No sales visits logged.</p>
           ) : (
             sales.map(s => (
-              <div key={s.id} className="p-4 bg-white border border-slate-100 rounded-3xl shadow-sm">
+              <div 
+                key={s.id} 
+                onClick={() => setSelectedSale(s)}
+                className="p-4 bg-white border border-slate-100 rounded-3xl shadow-sm cursor-pointer hover:shadow-md hover:border-blue-200 transition-all"
+              >
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex items-center space-x-3">
                     <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
@@ -75,6 +79,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({ logs, sales }) => {
                     <div>
                       <p className="font-bold text-slate-800">{s.shopName}</p>
                       <p className="text-[10px] text-slate-400 font-bold uppercase">{new Date(s.timestamp).toLocaleTimeString()}</p>
+                      {s.shopMobile && <p className="text-[10px] text-blue-600 font-bold">📞 {s.shopMobile}</p>}
                     </div>
                   </div>
                   <div className="text-right">
@@ -94,6 +99,102 @@ const HistoryView: React.FC<HistoryViewProps> = ({ logs, sales }) => {
           )
         )}
       </div>
+
+      {/* Pharmacy Details Modal */}
+      {selectedSale && (
+        <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4">
+          <div className="bg-white rounded-[2.5rem] p-6 max-w-md w-full shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-black text-slate-800">Pharmacy Details</h3>
+              <button onClick={() => setSelectedSale(null)} className="p-1 hover:bg-slate-100 rounded-lg">
+                <X className="w-6 h-6 text-slate-400" />
+              </button>
+            </div>
+
+            <div className="space-y-5">
+              {/* Pharmacy Header */}
+              <div className="bg-blue-50 p-4 rounded-2xl border border-blue-100">
+                <p className="text-sm font-black text-slate-800">{selectedSale.shopName}</p>
+                {selectedSale.shopAddress && (
+                  <p className="text-xs text-slate-600 mt-2 flex items-start space-x-2">
+                    <LocationIcon className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                    <span>{selectedSale.shopAddress}</span>
+                  </p>
+                )}
+                {selectedSale.shopMobile && (
+                  <p className="text-xs text-slate-600 mt-2 flex items-center space-x-2">
+                    <Phone className="w-4 h-4" />
+                    <span>{selectedSale.shopMobile}</span>
+                  </p>
+                )}
+              </div>
+
+              {/* Order Details */}
+              <div className="border-b border-slate-100 pb-4">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-3">Order Details</p>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-slate-600">Medicine:</span>
+                    <span className="text-sm font-bold text-slate-800">{selectedSale.medicineName}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-slate-600">Quantity:</span>
+                    <span className="text-sm font-bold text-slate-800">{selectedSale.quantity} units</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-slate-600">Order Value:</span>
+                    <span className="text-sm font-bold text-blue-600">₹{selectedSale.value}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-slate-600">Profit:</span>
+                    <span className="text-sm font-bold text-green-600">₹{selectedSale.profit.toFixed(0)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Timeline */}
+              <div className="space-y-4">
+                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Delivery Timeline</p>
+                
+                <div className="flex space-x-3">
+                  <div className="flex flex-col items-center">
+                    <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center border-2 border-green-500">
+                      <CheckCircle2 className="w-5 h-5 text-green-600" />
+                    </div>
+                    <div className="w-0.5 h-8 bg-green-200 my-1"></div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-800">Order Placed</p>
+                    <p className="text-[10px] text-slate-500">{new Date(selectedSale.timestamp).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                    <p className="text-[10px] text-slate-500">{new Date(selectedSale.timestamp).toLocaleTimeString()}</p>
+                  </div>
+                </div>
+
+                <div className="flex space-x-3">
+                  <div className="flex flex-col items-center">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center border-2 border-blue-500">
+                      <Calendar className="w-5 h-5 text-blue-600" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-slate-800">Expected Delivery</p>
+                    <p className="text-[10px] text-slate-500">{selectedSale.deliveryDate ? new Date(selectedSale.deliveryDate).toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) : 'Processing'}</p>
+                    <p className="text-[10px] text-slate-400 italic">to pharmacy company</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Order Confirmation */}
+              <div className="bg-green-50 p-4 rounded-2xl border border-green-100 text-center">
+                <p className="text-xs font-bold text-green-700 flex items-center justify-center space-x-1">
+                  <CheckCircle2 className="w-4 h-4" />
+                  <span>Order Confirmed & Processing</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

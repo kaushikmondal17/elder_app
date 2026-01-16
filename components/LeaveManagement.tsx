@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { LeaveRequest } from '../types';
-import { CalendarClock, Plus, X, Thermometer, Briefcase, Plane, AlertCircle, CheckCircle2, Clock } from 'lucide-react';
+import { CalendarClock, Plus, X, Thermometer, Briefcase, Plane, AlertCircle, CheckCircle2, Clock, Edit2, Save } from 'lucide-react';
 
 interface LeaveManagementProps {
   leaves: LeaveRequest[];
@@ -11,6 +11,13 @@ interface LeaveManagementProps {
 
 const LeaveManagement: React.FC<LeaveManagementProps> = ({ leaves, onApply, userId }) => {
   const [isApplying, setIsApplying] = useState(false);
+  const [selectedLeaveType, setSelectedLeaveType] = useState<'SICK' | 'CASUAL' | 'EARNED' | null>(null);
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
+  const [editedDescriptions, setEditedDescriptions] = useState({
+    SICK: 'Used for medical reasons',
+    CASUAL: 'Used for personal work or any reason',
+    EARNED: 'Annual leave based on service'
+  });
   const [formData, setFormData] = useState({
     type: 'SICK' as const,
     startDate: '',
@@ -29,6 +36,12 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ leaves, onApply, user
     setIsApplying(false);
   };
 
+  const leaveDetails = {
+    SICK: { label: 'Sick Leave', used: 4, total: 12, color: 'bg-orange-500', description: editedDescriptions.SICK },
+    CASUAL: { label: 'Casual Leave', used: 8, total: 15, color: 'bg-blue-500', description: editedDescriptions.CASUAL },
+    EARNED: { label: 'Earned Leave', used: 12, total: 20, color: 'bg-green-500', description: editedDescriptions.EARNED }
+  };
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
@@ -43,9 +56,27 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ leaves, onApply, user
 
       {/* Leave Balances */}
       <div className="grid grid-cols-3 gap-3">
-        <BalanceCard icon={<Thermometer className="w-4 h-4" />} label="Sick" count="4/12" color="bg-orange-500" />
-        <BalanceCard icon={<Briefcase className="w-4 h-4" />} label="Casual" count="8/15" color="bg-blue-500" />
-        <BalanceCard icon={<Plane className="w-4 h-4" />} label="Earned" count="12/20" color="bg-green-500" />
+        <BalanceCard 
+          icon={<Thermometer className="w-4 h-4" />} 
+          label="Sick" 
+          count="4/12" 
+          color="bg-orange-500"
+          onClick={() => setSelectedLeaveType('SICK')}
+        />
+        <BalanceCard 
+          icon={<Briefcase className="w-4 h-4" />} 
+          label="Casual" 
+          count="8/15" 
+          color="bg-blue-500"
+          onClick={() => setSelectedLeaveType('CASUAL')}
+        />
+        <BalanceCard 
+          icon={<Plane className="w-4 h-4" />} 
+          label="Earned" 
+          count="12/20" 
+          color="bg-green-500"
+          onClick={() => setSelectedLeaveType('EARNED')}
+        />
       </div>
 
       <div className="space-y-4">
@@ -80,6 +111,96 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ leaves, onApply, user
           ))
         )}
       </div>
+
+      {/* Leave Details Popup */}
+      {selectedLeaveType && (
+        <div className="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-[2.5rem] p-8 max-w-sm w-full shadow-2xl animate-in fade-in zoom-in-95">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="text-xl font-bold text-slate-800">{leaveDetails[selectedLeaveType].label}</h3>
+              <button 
+                onClick={() => setSelectedLeaveType(null)}
+                className="p-2 bg-slate-100 hover:bg-slate-200 rounded-full transition-colors"
+              >
+                <X className="w-5 h-5 text-slate-400" />
+              </button>
+            </div>
+
+            <div className="space-y-6">
+              {/* Leave Info */}
+              <div className={`p-6 rounded-2xl text-white ${leaveDetails[selectedLeaveType].color}`}>
+                <div className="text-center">
+                  <p className="text-sm font-semibold opacity-90">Total Balance</p>
+                  <p className="text-4xl font-black mt-2">{leaveDetails[selectedLeaveType].total}</p>
+                  <p className="text-sm opacity-90 mt-2">days available</p>
+                </div>
+              </div>
+
+              {/* Usage Stats */}
+              <div className="space-y-3">
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <p className="text-sm font-bold text-slate-700">Used</p>
+                    <p className="text-sm font-bold text-slate-700">{leaveDetails[selectedLeaveType].used} days</p>
+                  </div>
+                  <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                    <div 
+                      className={`h-full ${leaveDetails[selectedLeaveType].color}`}
+                      style={{ width: `${(leaveDetails[selectedLeaveType].used / leaveDetails[selectedLeaveType].total) * 100}%` }}
+                    />
+                  </div>
+                </div>
+                <div>
+                  <div className="flex justify-between mb-2">
+                    <p className="text-sm font-bold text-slate-700">Remaining</p>
+                    <p className="text-sm font-bold text-green-600">{leaveDetails[selectedLeaveType].total - leaveDetails[selectedLeaveType].used} days</p>
+                  </div>
+                  <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                    <div 
+                      className="h-full bg-green-500"
+                      style={{ width: `${((leaveDetails[selectedLeaveType].total - leaveDetails[selectedLeaveType].used) / leaveDetails[selectedLeaveType].total) * 100}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="p-4 bg-slate-50 rounded-2xl">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-xs font-bold text-slate-400 uppercase">About</p>
+                  <button
+                    onClick={() => setIsEditingDescription(!isEditingDescription)}
+                    className="p-1 hover:bg-blue-100 rounded-lg transition-colors"
+                  >
+                    {isEditingDescription ? <Save className="w-4 h-4 text-green-600" /> : <Edit2 className="w-4 h-4 text-blue-600" />}
+                  </button>
+                </div>
+                {isEditingDescription ? (
+                  <textarea
+                    value={editedDescriptions[selectedLeaveType]}
+                    onChange={(e) => setEditedDescriptions({
+                      ...editedDescriptions,
+                      [selectedLeaveType]: e.target.value
+                    })}
+                    className="w-full px-3 py-2 border-2 border-blue-300 rounded-lg focus:outline-none focus:border-blue-500 text-sm font-medium text-slate-700 resize-none"
+                    rows={3}
+                  />
+                ) : (
+                  <p className="text-sm text-slate-600 font-medium">{leaveDetails[selectedLeaveType].description}</p>
+                )}
+              </div>
+
+              {/* Close Button */}
+              <button 
+                onClick={() => setSelectedLeaveType(null)}
+                className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Apply Modal */}
       {isApplying && (
@@ -155,14 +276,17 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ leaves, onApply, user
   );
 };
 
-const BalanceCard: React.FC<{ icon: React.ReactNode, label: string, count: string, color: string }> = ({ icon, label, count, color }) => (
-  <div className="bg-white p-4 rounded-3xl border border-slate-100 text-center flex flex-col items-center">
+const BalanceCard: React.FC<{ icon: React.ReactNode, label: string, count: string, color: string, onClick?: () => void }> = ({ icon, label, count, color, onClick }) => (
+  <button 
+    onClick={onClick}
+    className="bg-white p-4 rounded-3xl border border-slate-100 text-center flex flex-col items-center hover:shadow-md hover:border-blue-200 transition-all cursor-pointer"
+  >
     <div className={`p-2 rounded-lg text-white mb-2 ${color}`}>
       {icon}
     </div>
     <p className="text-[10px] font-bold text-slate-400 uppercase">{label}</p>
     <p className="text-sm font-black text-slate-800">{count}</p>
-  </div>
+  </button>
 );
 
 export default LeaveManagement;

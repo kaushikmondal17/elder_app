@@ -28,6 +28,9 @@ export interface User {
   password?: string;
   photoSeed?: string;
   assignedTasks?: Task[];
+  aadharNo?: string;
+  idProofType?: string;
+  companyIdNo?: string;
 }
 
 export interface LeaveRequest {
@@ -45,11 +48,14 @@ export interface SalesRecord {
   salesmanId: string;
   salesmanName: string;
   shopName: string;
+  shopAddress?: string;
+  shopMobile?: string;
   medicineName: string;
   quantity: number;
   value: number;
   profit: number;
   timestamp: string;
+  deliveryDate?: string;
   location: {
     lat: number;
     lng: number;
@@ -67,5 +73,6 @@ export interface AttendanceRecord {
     lat: number;
     lng: number;
   };
+  place?: string;
   isValid: boolean;
 }
