@@ -14,6 +14,7 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
   const [photo, setPhoto] = useState<string | null>(null);
   const [location, setLocation] = useState<GeolocationCoordinates | null>(null);
   const [showHistory, setShowHistory] = useState(false);
+  const [selectedLog, setSelectedLog] = useState<AttendanceRecord | null>(null);
   const [streamActive, setStreamActive] = useState(false);
   const [mediaStream, setMediaStream] = useState<MediaStream | null>(null);
   const [useFallback, setUseFallback] = useState(false);
@@ -132,6 +133,67 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
 
   const lastLog = logs[0];
 
+  // Demo/Dummy attendance history data
+  const demoLogs: AttendanceRecord[] = [
+    {
+      id: 'demo-1',
+      userId: 'user-123',
+      userName: 'John Smith',
+      type: 'IN',
+      timestamp: new Date(Date.now() - 3600000).toISOString(),
+      photo: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%2385c1e9" width="100" height="100"/%3E%3Ctext x="50" y="50" font-size="40" fill="white" text-anchor="middle" dy=".3em"%3EJS%3C/text%3E%3C/svg%3E',
+      location: { lat: 40.7128, lng: -74.0060 },
+      place: 'Office',
+      isValid: true
+    },
+    {
+      id: 'demo-2',
+      userId: 'user-124',
+      userName: 'Sarah Johnson',
+      type: 'OUT',
+      timestamp: new Date(Date.now() - 7200000).toISOString(),
+      photo: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23f8b739" width="100" height="100"/%3E%3Ctext x="50" y="50" font-size="40" fill="white" text-anchor="middle" dy=".3em"%3ESJ%3C/text%3E%3C/svg%3E',
+      location: { lat: 40.7580, lng: -73.9855 },
+      place: 'Office',
+      isValid: true
+    },
+    {
+      id: 'demo-3',
+      userId: 'user-125',
+      userName: 'Mike Davis',
+      type: 'IN',
+      timestamp: new Date(Date.now() - 10800000).toISOString(),
+      photo: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%2352be80" width="100" height="100"/%3E%3Ctext x="50" y="50" font-size="40" fill="white" text-anchor="middle" dy=".3em"%3EMD%3C/text%3E%3C/svg%3E',
+      location: { lat: 40.7489, lng: -73.9680 },
+      place: 'Outside Office (40.75890, -73.96800)',
+      isValid: false
+    },
+    {
+      id: 'demo-4',
+      userId: 'user-126',
+      userName: 'Emma Wilson',
+      type: 'OUT',
+      timestamp: new Date(Date.now() - 14400000).toISOString(),
+      photo: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23e74c3c" width="100" height="100"/%3E%3Ctext x="50" y="50" font-size="40" fill="white" text-anchor="middle" dy=".3em"%3EEW%3C/text%3E%3C/svg%3E',
+      location: { lat: 40.7614, lng: -73.9776 },
+      place: 'Office',
+      isValid: true
+    },
+    {
+      id: 'demo-5',
+      userId: 'user-127',
+      userName: 'Robert Chen',
+      type: 'IN',
+      timestamp: new Date(Date.now() - 18000000).toISOString(),
+      photo: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%239b59b6" width="100" height="100"/%3E%3Ctext x="50" y="50" font-size="40" fill="white" text-anchor="middle" dy=".3em"%3ERC%3C/text%3E%3C/svg%3E',
+      location: { lat: 40.7505, lng: -73.9934 },
+      place: 'Outside Office (40.75050, -73.99340)',
+      isValid: false
+    }
+  ];
+
+  const displayLogs = logs.length > 0 ? logs : demoLogs;
+
   return (
     <div className="p-6 space-y-6">
       <div className="flex items-center justify-between">
@@ -235,8 +297,12 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
             Salesman Verification History
           </button>
         </div>
-        {logs.map(log => (
-          <div key={log.id} className="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-3xl">
+        {displayLogs.map(log => (
+          <div 
+            key={log.id} 
+            onClick={() => setSelectedLog(log)}
+            className="flex items-center justify-between p-4 bg-white border border-slate-100 rounded-3xl cursor-pointer hover:shadow-lg hover:border-blue-200 transition-all"
+          >
             <div className="flex items-center space-x-3">
               <div className={`p-2 rounded-xl font-black text-xs ${log.type === 'IN' ? 'bg-green-50 text-green-600' : 'bg-slate-50 text-slate-500'}`}>{log.type}</div>
               <div>
@@ -245,7 +311,14 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
                 {log.place && <p className="text-[10px] text-slate-500">{log.place}</p>}
               </div>
             </div>
-            <img src={log.photo} className="w-12 h-12 rounded-xl object-cover" />
+            <div className="flex items-center space-x-3">
+              <img src={log.photo} className="w-12 h-12 rounded-xl object-cover" />
+              {log.isValid ? (
+                <CheckCircle2 className="w-6 h-6 text-green-500" />
+              ) : (
+                <AlertCircle className="w-6 h-6 text-amber-500" />
+              )}
+            </div>
           </div>
         ))}
       </div>
@@ -259,8 +332,8 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
               <button onClick={() => setShowHistory(false)} className="text-slate-400 hover:text-slate-600">Close</button>
             </div>
             <div className="space-y-3">
-              {logs.length === 0 && <p className="text-sm text-slate-500">No verification records found.</p>}
-              {logs.map(l => (
+              {displayLogs.length === 0 && <p className="text-sm text-slate-500">No verification records found.</p>}
+              {displayLogs.map(l => (
                 <div key={l.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
                   <div className="flex items-center space-x-3">
                     <div className={`p-2 rounded-xl font-black text-xs ${l.type === 'IN' ? 'bg-green-50 text-green-600' : 'bg-slate-50 text-slate-500'}`}>{l.type}</div>
@@ -271,7 +344,14 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
                       {l.place && <p className="text-xs text-slate-500">{l.place}</p>}
                     </div>
                   </div>
-                  <img src={l.photo} alt="proof" className="w-12 h-12 rounded-md object-cover" />
+                  <div className="flex items-center space-x-2">
+                    <img src={l.photo} alt="proof" className="w-12 h-12 rounded-md object-cover" />
+                    {l.isValid ? (
+                      <CheckCircle2 className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <AlertCircle className="w-5 h-5 text-amber-500" />
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
