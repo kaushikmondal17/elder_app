@@ -82,7 +82,9 @@ const Profile: React.FC<ProfileProps> = ({ user, attendance, onUserUpdate }) => 
           >
             <Edit2 className="w-4 h-4 text-blue-600" />
           </button>
+         
         </div>
+         <p className="text-bold text-sm my-2 ">User ID :<span>124SGFM14U</span></p>
         <p className="text-xs text-blue-600 font-black uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full mt-1">
           {editedUser.role} • {editedUser.department}
         </p>
@@ -102,7 +104,7 @@ const Profile: React.FC<ProfileProps> = ({ user, attendance, onUserUpdate }) => 
             <DetailRow icon={<Shield className="w-5 h-5 text-amber-500" />} label="Aadhar Number" value={user.aadharNo ? `****${user.aadharNo.slice(-4)}` : 'Not set'} />
             <DetailRow icon={<Shield className="w-5 h-5 text-green-500" />} label="ID Proof Type" value={user.idProofType || 'Not set'} />
             <DetailRow icon={<Droplets className="w-5 h-5 text-red-500" />} label="Blood Group" value={user.bloodGroup} />
-            <DetailRow icon={<Briefcase className="w-5 h-5" />} label="Joining Date" value={new Date(user.joiningDate).toLocaleDateString()} />
+            <DetailRow icon={<Briefcase className="w-5 h-5" />} label="Joining Date" value={new Date(user.joiningDate).toLocaleDateString()} /> 
             <DetailRow icon={<Phone className="w-5 h-5" />} label="Contact" value={user.phone} />
             <DetailRow icon={<Mail className="w-5 h-5" />} label="Email" value={user.email} />
             <DetailRow icon={<MapPin className="w-5 h-5" />} label="Reporting Office" value="Mumbai (HQ)" />
