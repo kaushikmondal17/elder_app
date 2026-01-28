@@ -16,7 +16,8 @@ export type AppView = 'dashboard' | 'attendance' | 'sales' | 'profile' | 'leaves
 
 const DEFAULT_STAFF: User[] = [
   { id: 'S101', employeeId: 'ELD-SLS-101', name: 'Rajesh Kumar', role: UserRole.SALESMAN, department: 'Pharma Sales', points: 1250, phone: '9876543210', salary: 35000, pf: 1800, joiningDate: '2022-03-15', bloodGroup: 'B+', email: 'rajesh.k@elderpharma.com', assignedTasks: [] },
-  { id: 'S102', employeeId: 'ELD-SLS-102', name: 'Amit Singh', role: UserRole.SALESMAN, department: 'Pharma Sales', points: 980, phone: '9822110033', salary: 32000, pf: 1600, joiningDate: '2023-01-10', bloodGroup: 'A+', email: 'amit.s@elderpharma.com', assignedTasks: [] }
+  { id: 'S102', employeeId: 'ELD-SLS-102', name: 'Amit Singh', role: UserRole.SALESMAN, department: 'Pharma Sales', points: 980, phone: '9822110033', salary: 32000, pf: 1600, joiningDate: '2023-01-10', bloodGroup: 'A+', email: 'amit.s@elderpharma.com', assignedTasks: [] },
+    { id: 'K1701', employeeId: 'ELD-SLS-K1701', name: 'Kaushik Mondal', role: UserRole.SALESMAN, department: 'IT Deperment', points: 980, phone: '8754218944', salary: 42000, pf: 1800, joiningDate: '2024-12-11', bloodGroup: 'A+', email: 'kaushik@elderpharma.com', assignedTasks: [] },
 ];
 
 const DUMMY_ATTENDANCE: AttendanceRecord[] = [

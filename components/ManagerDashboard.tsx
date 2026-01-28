@@ -451,7 +451,6 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ sales, attendance, 
               className="w-full bg-blue-600 text-white font-black py-3 rounded-2xl uppercase text-xs tracking-widest hover:bg-blue-700 transition-colors"
             >
               Open in Google Maps
-              <p>Lorem ipsum dolor sit amet.</p>
             </button>
           </div>
         </div>
