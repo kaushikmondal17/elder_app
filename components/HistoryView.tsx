@@ -40,7 +40,7 @@ const HistoryView: React.FC<HistoryViewProps> = ({ logs, sales }) => {
       <h2 className="text-2xl font-bold text-slate-800">Field Activity logs</h2>
       
       {/* Statistics Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
         <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-2xl border border-blue-200">
           <div className="flex items-center justify-between">
             <div>
