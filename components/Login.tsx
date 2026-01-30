@@ -82,7 +82,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
           <div className="w-20 h-20 bg-blue-50 rounded-[1.8rem] flex items-center justify-center mb-4 shadow-inner">
             <ShieldCheck className="w-10 h-10 text-blue-600" />
           </div>
-          <h1 className="text-3xl font-black text-slate-800 tracking-tight">Elder Laboratories</h1>
+          <h1 className="text-3xl font-black text-slate-800 tracking-tight">Elder Laboratories Ltd</h1>
           <p className="text-slate-400 font-bold uppercase text-[10px] tracking-[0.2em] mt-1">Enterprise Solutions</p>
         </div>
 
@@ -220,8 +220,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
         <div className="mt-10 text-center">
            <p className="text-[9px] text-slate-300 font-bold uppercase tracking-[0.1em]">
-             Secured by 256-bit AES Encryption <br />
-             Proprietary Asset of Elder Laboratories
+             Secured by 2026 <br />
+             Proprietary Asset of Elder Laboratories Ltd.
            </p>
         </div>
       </div>
