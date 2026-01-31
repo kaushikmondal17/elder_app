@@ -280,7 +280,7 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
             </button>
           </div>
           {!loginOpen && !logoutOpen && (
-             <p className="text-center text-[10px] text-amber-600 font-bold uppercase tracking-wider">Attendance windows are currently closed</p>
+             <p className="text-center text-[10px] text-amber-600 font-bold uppercase tracking-wider">Attendance windows are currently closed the time</p>
           )}
         </div>
       </div>
