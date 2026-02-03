@@ -13,7 +13,7 @@ export const getPerformanceInsights = async (sales: SalesRecord[], name: string)
   try {
       const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
-      contents: `Analyze this sales performance for ${name}: ${summary}. Provide 3 short actionable tips to increase sales and profit for Elder Laboratories. Keep it professional and motivational.`,
+      contents: `Analyze this sales performance for ${name}: ${summary}. Provide 3 short actionable tips to increase sales and profit for Elder Laboratories Ltd. Keep it professional and motivational.`,
       config: {
         thinkingConfig: { thinkingBudget: 0 }
       }
