@@ -363,3 +363,4 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
 };
 
 export default AttendanceControl;
+                                                      

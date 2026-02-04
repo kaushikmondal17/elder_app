@@ -20,7 +20,7 @@ const About: React.FC = () => {
             <h4 className="font-bold">Our Company</h4>
           </div>
           <p className="text-sm text-slate-600 leading-relaxed">
-            Elder Laboratories is a leading name in the healthcare sector, dedicated to providing high-quality pharmaceutical products that improve the lives of millions across the globe.
+            Elder Laboratories Ltd is a leading name in the healthcare sector, dedicated to providing high-quality pharmaceutical products that improve the lives of millions across the globe.
           </p>
         </section>
 
