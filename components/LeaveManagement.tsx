@@ -80,7 +80,7 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ leaves, onApply, user
       </div>
 
       <div className="space-y-4">
-        <h4 className="font-bold text-slate-800">My Applications</h4>
+        <h4 className="font-bold text-slate-800">My Leave Applications</h4>
         {leaves.length === 0 ? (
           <div className="text-center py-12 bg-white border border-dashed border-slate-200 rounded-3xl">
             <CalendarClock className="w-12 h-12 text-slate-200 mx-auto mb-3" />
@@ -217,7 +217,7 @@ const LeaveManagement: React.FC<LeaveManagementProps> = ({ leaves, onApply, user
               <div>
                 <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Leave Type</label>
                 <select 
-                  className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl focus:ring-2 focus:ring-blue-500 font-bold text-slate-700"
+                  className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl focus:ring-2 focus:ring-blue-500 font-bold text-slate-700 z-10 "
                   value={formData.type}
                   onChange={(e) => setFormData({...formData, type: e.target.value as any})}
                 >

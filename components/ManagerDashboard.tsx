@@ -178,7 +178,7 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ sales, attendance, 
 
           <div className="space-y-4">
             <h4 className="font-bold text-slate-800 flex items-center justify-between">
-              <span>Recent Shop Sales</span>
+              <span>Recent Shop Top Sales</span>
               <Store className="w-4 h-4 text-slate-300" />
             </h4>
             {sales.length === 0 ? (
