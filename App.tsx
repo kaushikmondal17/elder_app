@@ -17,7 +17,10 @@ export type AppView = 'dashboard' | 'attendance' | 'sales' | 'profile' | 'leaves
 const DEFAULT_STAFF: User[] = [
   { id: 'S101', employeeId: 'ELD-SLS-101', name: 'Rajesh Kumar', role: UserRole.SALESMAN, department: 'Pharma Sales', points: 1250, phone: '9876543210', salary: 35000, pf: 1800, joiningDate: '2022-03-15', bloodGroup: 'B+', email: 'rajesh.k@elderpharma.com', assignedTasks: [] },
   { id: 'S102', employeeId: 'ELD-SLS-102', name: 'Amit Singh', role: UserRole.SALESMAN, department: 'Pharma Sales', points: 980, phone: '9822110033', salary: 32000, pf: 1600, joiningDate: '2023-01-10', bloodGroup: 'A+', email: 'amit.s@elderpharma.com', assignedTasks: [] },
-    { id: 'K1701', employeeId: 'ELD-SLS-K1701', name: 'Kaushik Mondal', role: UserRole.SALESMAN, department: 'IT Deperment', points: 980, phone: '8754218944', salary: 42000, pf: 1800, joiningDate: '2024-12-11', bloodGroup: 'A+', email: 'kaushik@elderpharma.com', assignedTasks: [] },
+    { id: 'K1701', employeeId: 'ELD-SLS-K1701', name: 'Kaushik Mondal', role: UserRole.SALESMAN, department: 'IT Department', points: 980, phone: '8754218944', salary: 42000, pf: 1800, joiningDate: '2024-12-11', bloodGroup: 'A+', email: 'kaushik@elderpharma.com', assignedTasks: [] },
+    { id: 'K1702', employeeId: 'ELD-SLS-K1702', name: 'Rahul Sharma', role: UserRole.SALESMAN, department: 'Sales Department', points: 1100, phone: '8754218945', salary: 45000, pf: 2000, joiningDate: '2024-12-12', bloodGroup: 'B+', email: 'rahul.s@elderpharma.com', assignedTasks: [] },
+    { id: 'K1703', employeeId: 'ELD-SLS-K1703', name: 'Priya Patel', role: UserRole.SALESMAN, department: 'IT Department', points: 850, phone: '8754218946', salary: 38000, pf: 1900, joiningDate: '2024-12-13', bloodGroup: 'O+', email: 'priya.p@elderpharma.com', assignedTasks: [] },
+    { id: 'K1704', employeeId: 'ELD-SLS-K1704', name: 'Neha Gupta', role: UserRole.SALESMAN, department: 'IT Department', points: 950, phone: '8754218947', salary: 43000, pf: 1950, joiningDate: '2024-12-14', bloodGroup: 'AB+', email:'neha.g@elderpharma.com' , assignedTasks : [] },
 ];
 
 const DUMMY_ATTENDANCE: AttendanceRecord[] = [
