@@ -245,7 +245,7 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ sales, attendance, 
             </div>
             <div className="space-y-4">
               <div>
-                <label className="text-[10px] font-black uppercase text-blue-200 block mb-1">Select Employee</label>
+                <label className="text-[10px] font-black uppercase text-blue-200 block mb-1">Select Employee Name</label>
                 <select
                   value={taskForm.userId}
                   onChange={e => setTaskForm({ ...taskForm, userId: e.target.value })}
@@ -455,6 +455,7 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ sales, attendance, 
           </div>
         </div>
       )}
+      
     </div>
   );
 };
