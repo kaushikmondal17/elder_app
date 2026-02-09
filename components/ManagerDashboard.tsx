@@ -211,7 +211,7 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ sales, attendance, 
       {activeTab === 'staff' && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h4 className="font-bold text-slate-800">Field Force Directory</h4>
+            <h4 className="font-bold text-slate-800">Staff Force Directory</h4>
             <button className="p-2 bg-blue-600 text-white rounded-xl"><Plus className="w-4 h-4" /></button>
           </div>
           <div className="space-y-3">
@@ -241,7 +241,7 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ sales, attendance, 
           <form onSubmit={handleTaskSubmit} className="bg-blue-600 rounded-[2.5rem] p-8 text-white shadow-xl">
             <div className="flex items-center space-x-3 mb-6">
               <Calendar className="w-6 h-6 text-blue-200" />
-              <h4 className="text-lg font-black uppercase tracking-tight">Deploy Daily Task</h4>
+              <h4 className="text-lg font-black uppercase tracking-tight">Daily Task Deploy</h4>
             </div>
             <div className="space-y-4">
               <div>
