@@ -241,7 +241,7 @@ const AttendanceControl: React.FC<AttendanceControlProps> = ({ user, logs, onAdd
         <div className="p-6 space-y-4">
           <div className="flex items-center space-x-3 text-sm">
             <MapPin className="w-5 h-5 text-blue-500" />
-            <span className="text-slate-600 font-medium">{location ? 'Location Locked' : 'Searching GPS...'}</span>
+            <span className="text-slate-600 font-medium border-b-indigo-500">{location ? 'Location Locked' : 'Searching Your GPS...'}</span>
           </div>
 
           {photo && (
