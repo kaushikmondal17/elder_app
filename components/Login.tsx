@@ -76,7 +76,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700">
+    <div className="min-h-screen  flex items-center justify-center p-6 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700">
       <div className="w-full max-w-md bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-10 animate-in fade-in zoom-in duration-300">
         <div className="flex flex-col items-center mb-8">
           <div className="w-20 h-20 bg-blue-50 rounded-[1.8rem] flex items-center justify-center mb-4 shadow-inner">
