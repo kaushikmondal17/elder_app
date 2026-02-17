@@ -54,14 +54,14 @@ const SalesmanDashboard: React.FC<SalesmanDashboardProps> = ({ user, sales }) =>
         <div className="flex items-center justify-between">
           <h4 className="font-bold text-slate-800 flex items-center space-x-2">
             <LayoutList className="w-4 h-4 text-blue-500" />
-            <span>Assigned Tasks</span>
+            <span> Your Project</span>
           </h4>
           <span className="text-[9px] font-black text-blue-600 uppercase bg-blue-50 px-2 py-1 rounded-lg">Operational Orders</span>
         </div>
         <div className="space-y-3">
           {tasks.length === 0 ? (
             <div className="p-8 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-slate-100">
-               <p className="text-slate-400 text-xs font-bold italic">No pending manager tasks</p>
+               <p className="text-slate-400 text-xs font-bold italic">No pending manager project tasks</p>
             </div>
           ) : (
             tasks.map(t => (
