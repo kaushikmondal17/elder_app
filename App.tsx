@@ -17,10 +17,10 @@ export type AppView = 'dashboard' | 'attendance' | 'sales' | 'profile' | 'leaves
 const DEFAULT_STAFF: User[] = [
   { id: 'S101', employeeId: 'ELD-SLS-101', name: 'Rajesh Kumar', role: UserRole.SALESMAN, department: 'Pharma Sales', points: 1250, phone: '9876543210', salary: 35000, pf: 1800, joiningDate: '2022-03-15', bloodGroup: 'B+', email: 'rajesh.k@elderpharma.com', assignedTasks: [] },
   { id: 'S102', employeeId: 'ELD-SLS-102', name: 'Amit Singh', role: UserRole.SALESMAN, department: 'Pharma Sales', points: 980, phone: '9822110033', salary: 32000, pf: 1600, joiningDate: '2023-01-10', bloodGroup: 'A+', email: 'amit.s@elderpharma.com', assignedTasks: [] },
-    { id: 'K1701', employeeId: 'ELD-SLS-K1701', name: 'Kaushik Mondal', role: UserRole.SALESMAN, department: 'IT Department', points: 980, phone: '8754218944', salary: 42000, pf: 1800, joiningDate: '2024-12-11', bloodGroup: 'A+', email: 'kaushik@elderpharma.com', assignedTasks: [] },
-    { id: 'K1702', employeeId: 'ELD-SLS-K1702', name: 'Rahul Sharma', role: UserRole.SALESMAN, department: 'Sales Department', points: 1100, phone: '8754218945', salary: 45000, pf: 2000, joiningDate: '2024-12-12', bloodGroup: 'B+', email: 'rahul.s@elderpharma.com', assignedTasks: [] },
-    { id: 'K1703', employeeId: 'ELD-SLS-K1703', name: 'Priya Patel', role: UserRole.SALESMAN, department: 'IT Department', points: 850, phone: '8754218946', salary: 38000, pf: 1900, joiningDate: '2024-12-13', bloodGroup: 'O+', email: 'priya.p@elderpharma.com', assignedTasks: [] },
-    { id: 'K1704', employeeId: 'ELD-SLS-K1704', name: 'Neha Gupta', role: UserRole.SALESMAN, department: 'IT Department', points: 950, phone: '8754218947', salary: 43000, pf: 1950, joiningDate: '2024-12-14', bloodGroup: 'AB+', email:'neha.g@elderpharma.com' , assignedTasks : [] },
+  { id: 'K1701', employeeId: 'ELD-SLS-K1701', name: 'Kaushik Mondal', role: UserRole.SALESMAN, department: 'IT Department', points: 980, phone: '8754218944', salary: 42000, pf: 1800, joiningDate: '2024-12-11', bloodGroup: 'A+', email: 'kaushik@elderpharma.com', assignedTasks: [] },
+  { id: 'K1702', employeeId: 'ELD-SLS-K1702', name: 'Rahul Sharma', role: UserRole.SALESMAN, department: 'Sales Department', points: 1100, phone: '8754218945', salary: 45000, pf: 2000, joiningDate: '2024-12-12', bloodGroup: 'B+', email: 'rahul.s@elderpharma.com', assignedTasks: [] },
+  { id: 'K1703', employeeId: 'ELD-SLS-K1703', name: 'Priya Patel', role: UserRole.SALESMAN, department: 'IT Department', points: 850, phone: '8754218946', salary: 38000, pf: 1900, joiningDate: '2024-12-13', bloodGroup: 'O+', email: 'priya.p@elderpharma.com', assignedTasks: [] },
+  { id: 'K1704', employeeId: 'ELD-SLS-K1704', name: 'Neha Gupta', role: UserRole.SALESMAN, department: 'IT Department', points: 950, phone: '8754218947', salary: 43000, pf: 1950, joiningDate: '2024-12-14', bloodGroup: 'AB+', email: 'neha.g@elderpharma.com', assignedTasks: [] },
 ];
 
 const DUMMY_ATTENDANCE: AttendanceRecord[] = [
@@ -55,7 +55,7 @@ const App: React.FC = () => {
     const savedSales = localStorage.getItem('elder_sales');
     if (savedSales) setSalesData(JSON.parse(savedSales));
     else setSalesData(DUMMY_SALES);
-    
+
     const savedAttendance = localStorage.getItem('elder_attendance');
     if (savedAttendance) setAttendanceLogs(JSON.parse(savedAttendance));
     else setAttendanceLogs(DUMMY_ATTENDANCE);
@@ -105,7 +105,7 @@ const App: React.FC = () => {
     });
     setStaffList(updatedStaff);
     localStorage.setItem('elder_staff', JSON.stringify(updatedStaff));
-    
+
     // Update current user if they are the one getting the task
     if (user && user.id === userId) {
       setUser(updatedStaff.find(s => s.id === userId) || null);
@@ -127,16 +127,16 @@ const App: React.FC = () => {
     <Layout user={user} currentView={view} setView={setView} onLogout={handleLogout}>
       <div className="pt-4">
         {view === 'dashboard' && (
-          user.role === UserRole.SALESMAN 
+          user.role === UserRole.SALESMAN
             ? <SalesmanDashboard user={user} sales={salesData.filter(s => s.salesmanId === user.id)} />
-            : <ManagerDashboard 
-                sales={salesData} 
-                attendance={attendanceLogs} 
-                staffList={staffList} 
-                leaves={leaves}
-                onDeployTask={deployTask}
-                onUpdateStaff={updateStaffProfile}
-              />
+            : <ManagerDashboard
+              sales={salesData}
+              attendance={attendanceLogs}
+              staffList={staffList}
+              leaves={leaves}
+              onDeployTask={deployTask}
+              onUpdateStaff={updateStaffProfile}
+            />
         )}
         {view === 'attendance' && (
           <AttendanceControl user={user} logs={attendanceLogs.filter(a => a.userId === user.id)} onAdd={addAttendanceRecord} />
