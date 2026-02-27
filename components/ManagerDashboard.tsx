@@ -30,6 +30,7 @@ const ManagerDashboard: React.FC<ManagerDashboardProps> = ({ sales, attendance, 
   const handleTaskSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!taskForm.title || !taskForm.userId) return; 
+    
 
     onDeployTask(taskForm.userId, {
       id: Math.random().toString(36).substr(2, 9),
