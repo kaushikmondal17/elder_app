@@ -19,7 +19,7 @@ export const getPerformanceInsights = async (sales: SalesRecord[], name: string)
       }
     });
 
-    return response.text;
+    return response.text; 
   } catch (error) {
     console.error("Gemini Error:", error);
     return "Unable to generate insights at this moment.";
