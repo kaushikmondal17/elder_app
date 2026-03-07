@@ -97,14 +97,14 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
               <button 
                 type="button"
                 onClick={() => setRole(UserRole.SALESMAN)}
-                className={`flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all ${role === UserRole.SALESMAN ? 'bg-white shadow-md text-blue-600 scale-[1.02]' : 'text-slate-500'}`}
+                className={`sale-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all ${role === UserRole.SALESMAN ? 'bg-white shadow-md text-blue-600 scale-[1.02]' : 'text-slate-500'}`}
               >
                 Sales Agent
               </button>
               <button 
                 type="button"
                 onClick={() => setRole(UserRole.MANAGER)}
-                className={`flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all ${role === UserRole.MANAGER ? 'bg-white shadow-md text-blue-600 scale-[1.02]' : 'text-slate-500'}`}
+                className={` mng-btn flex-1 py-2.5 rounded-xl text-[10px] font-black uppercase transition-all ${role === UserRole.MANAGER ? 'bg-white shadow-md text-blue-600 scale-[1.02]' : 'text-slate-500'}`}
               >
                 Manager
               </button>
